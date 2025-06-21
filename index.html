@@ -920,7 +920,7 @@
                 <div class="profile-image">FO</div>
                 <div class="name">Frederick Opoku Afriyie</div>
                 <div class="title">Full-Stack Developer • Digital Innovator • Entrepreneur</div>
-                <div class="company">Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin'97</div>
+                <div class="company">Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin97</div>
             </div>
 
             <div class="primary-actions">
@@ -954,11 +954,11 @@
                     <span class="copy-indicator">Call</span>
                 </div>
 
-                <div class="contact-item" onclick="actionContact('website', 'github.com/fredopoku')">
+                <div class="contact-item" onclick="actionContact('website', 'github.com/frederickopoku')">
                     <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"/>
                     </svg>
-                    <span class="contact-text">github.com/fredkopoku</span>
+                    <span class="contact-text">github.com/frederickopoku</span>
                     <span class="copy-indicator">Visit</span>
                 </div>
 
@@ -1042,10 +1042,10 @@
             company: "Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin97",
             email: "opokufred32@gmail.com",
             phone: "+447555824861",
-            website: "github.com/fredopoku",
+            website: "github.com/frederickopoku",
             location: "London, UK",
             linkedin: "https://www.linkedin.com/in/frederick-opoku-afriyie-ba3137335",
-            github: "https://github.com/fredopoku",
+            github: "https://github.com/frederickopoku",
             twitter: "https://twitter.com/frederickopoku"
         };
 
@@ -1227,33 +1227,103 @@ END:VCARD`;
             }
         }
 
-        // Enhanced NFC with both reading and writing
-        let nfcReaderActive = false;
-
+        // Enhanced NFC with better detection and error handling
         async function shareViaNFC() {
-            if ('NDEFWriter' in window) {
-                try {
-                    const ndefWriter = new NDEFWriter();
-                    const message = {
-                        records: [
-                            { recordType: "text", data: generateVCard() },
-                            { recordType: "url", data: window.location.href }
-                        ]
-                    };
-                    
-                    await ndefWriter.write(message);
-                    showNotification('📡 Ready! Tap phones together to share');
-                    
-                    // Also start listening for incoming NFC
-                    startNFCListener();
-                    
-                } catch (error) {
-                    showNotification('📱 NFC not available - using share instead');
+            // Check browser support first
+            if (!('NDEFWriter' in window)) {
+                const userAgent = navigator.userAgent;
+                let message = '📱 NFC not supported in this browser. ';
+                
+                if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+                    message += 'Use AirDrop instead (iOS doesn\'t support Web NFC)';
+                    shareViaAirDrop();
+                } else if (userAgent.includes('Chrome') && userAgent.includes('Android')) {
+                    message += 'Try updating Chrome to the latest version.';
+                } else if (userAgent.includes('Firefox')) {
+                    message += 'Try opening in Chrome on Android.';
+                } else {
+                    message += 'Try Chrome on Android for NFC support.';
+                }
+                
+                showNotification(message);
+                return;
+            }
+
+            // Check if we're on HTTPS (required for NFC)
+            if (location.protocol !== 'https:' && !location.hostname.includes('localhost')) {
+                showNotification('🔒 NFC requires HTTPS. Deploy to GitHub Pages for full NFC support.');
+                shareCard();
+                return;
+            }
+
+            try {
+                // Check permissions first
+                const permissionStatus = await navigator.permissions.query({ name: 'nfc' });
+                
+                if (permissionStatus.state === 'denied') {
+                    showNotification('❌ NFC permission denied. Enable in browser settings.');
                     shareCard();
+                    return;
+                }
+
+                // Try to write NFC
+                const ndefWriter = new NDEFWriter();
+                const message = {
+                    records: [
+                        { recordType: "text", data: generateVCard() },
+                        { recordType: "url", data: window.location.href }
+                    ]
+                };
+                
+                await ndefWriter.write(message);
+                showNotification('📡 NFC Ready! Bring phones together to share (within 4cm)');
+                
+                // Also start listening for incoming NFC
+                startNFCListener();
+                
+            } catch (error) {
+                console.log('NFC Error:', error);
+                
+                let errorMessage = '📱 NFC unavailable: ';
+                
+                if (error.name === 'NotAllowedError') {
+                    errorMessage += 'Permission denied. Enable NFC in device settings.';
+                } else if (error.name === 'NotSupportedError') {
+                    errorMessage += 'Device doesn\'t support NFC.';
+                } else if (error.name === 'NotReadableError') {
+                    errorMessage += 'NFC is disabled. Enable in phone settings.';
+                } else {
+                    errorMessage += 'Using share instead.';
+                }
+                
+                showNotification(errorMessage);
+                shareCard();
+            }
+        }
+
+        // Add NFC capability detection
+        function checkNFCSupport() {
+            const indicator = document.querySelector('.nfc-indicator span');
+            const pulse = document.querySelector('.nfc-pulse');
+            
+            if ('NDEFWriter' in window) {
+                // Check if we're on HTTPS or localhost
+                if (location.protocol === 'https:' || location.hostname.includes('localhost')) {
+                    indicator.textContent = 'NFC Ready';
+                    pulse.style.background = '#4ade80'; // Green
+                } else {
+                    indicator.textContent = 'NFC Needs HTTPS';
+                    pulse.style.background = '#fbbf24'; // Yellow
                 }
             } else {
-                showNotification('📱 NFC not supported - using share instead');
-                shareCard();
+                // Check device type for appropriate message
+                if (navigator.userAgent.includes('iPhone')) {
+                    indicator.textContent = 'AirDrop Ready';
+                    pulse.style.background = '#3b82f6'; // Blue
+                } else {
+                    indicator.textContent = 'NFC Not Supported';
+                    pulse.style.background = '#ef4444'; // Red
+                }
             }
         }
 
@@ -1468,7 +1538,10 @@ END:VCARD`;
         // Initialize PWA features and NFC
         window.addEventListener('load', () => {
             initializePWA();
-            initializeAutoNFC();
+            checkNFCSupport();
+            if ('NDEFWriter' in window && location.protocol === 'https:') {
+                initializeAutoNFC();
+            }
         });
 
         // Install prompt handling
