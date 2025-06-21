@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Business Card - Frederick Opoku Afriyie</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Business Card">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRGlnaXRhbCBCdXNpbmVzcyBDYXJkIiwic2hvcnRfbmFtZSI6IkJpekNhcmQiLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBjMGMwYyIsInRoZW1lX2NvbG9yIjoiIzY2N2VlYSIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBek1qQWdNekl3SWo0S0lDQWdJRHh5WldOMElIZzlJakV3SWlCNVBTSXhNQ0lnZDJsa2RHZzlJak13TUNJZ2FHVnBaMmgwUFNJek1EQWlJR1pwYkd3OUlpTTJOamRsWldFaUlISjRQU0l4TlNJdlBnb2dJQ0FnUEhSbGVIUWdlRDBpTVRZd0lpQjVQU0l4TnpBaUlHWnBiR3c5SW1GaVl6QXhNanBuSWlCbVlXMXBiSGs5SW1Gc2FXZHVJRzV2Y20xaGJDSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0krQmk5cExDQWdQQzl6ZG1jKyIsInNpemVzIjoiMzIweDMyMCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0f0f0f 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            animation: slideUp 0.8s ease-out;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .business-card {
+            width: 100%;
+            max-width: 380px;
+            min-width: 280px;
+            height: auto;
+            min-height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px;
+            position: relative;
+            overflow: visible;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
+            margin: 10px auto;
+        }
+
+        .business-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .nfc-indicator {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 11px;
+            color: #667eea;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nfc-pulse {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .profile-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 600;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 15px;
+            color: #a0a0a0;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .company {
+            font-size: 13px;
+            color: #808080;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .primary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 18px;
+            padding: 18px 20px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .primary-btn:hover::before {
+            left: 100%;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 18px 20px;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.20);
+            transform: translateX(8px);
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            font-size: 14px;
+            color: #e0e0e0;
+            flex: 1;
+        }
+
+        .copy-indicator {
+            font-size: 12px;
+            color: #667eea;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item:hover .copy-indicator {
+            opacity: 1;
+        }
+
+        .sharing-section {
+            margin-bottom: 25px;
+        }
+
+        .sharing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .share-option {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .share-option:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.20);
+        }
+
+        .share-icon {
+            font-size: 20px;
+        }
+
+        .share-label {
+            font-size: 11px;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        .social-section {
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-text {
+            font-size: 12px;
+            color: #e0e0e0;
+            flex: 1;
+        }
+
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .qr-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .qr-modal {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-code:hover {
+            transform: scale(1.05);
+        }
+
+        .close-qr {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(102, 126, 234, 0.95);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            z-index: 1001;
+            animation: slideInNotification 0.4s ease-out;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 25px rgba(102, 126, 234, 0.3);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
+            }
+        }
+
+        @keyframes slideInNotification {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Extra Small Phones (iPhone SE, etc.) */
+        @media (max-width: 320px) {
+            body {
+                padding: 10px;
+            }
+            
+            .business-card {
+                min-width: 260px;
+                padding: 20px;
+                min-height: 580px;
+                border-radius: 24px;
+            }
+            
+            .name {
+                font-size: 20px;
+            }
+            
+            .title {
+                font-size: 13px;
+            }
+            
+            .company {
+                font-size: 11px;
+            }
+            
+            .profile-image {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            .primary-btn, .secondary-btn {
+                font-size: 13px;
+                padding: 14px 16px;
+                min-height: 48px;
+            }
+            
+            .sharing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .share-option {
+                padding: 12px 6px;
+                min-height: 60px;
+            }
+            
+            .share-icon {
+                font-size: 18px;
+            }
+            
+            .contact-item {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+            }
+            
+            .contact-text {
+                font-size: 12px;
+            }
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Small Phones */
+        @media (min-width: 321px) and (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .business-card {
+                min-width: 280px;
+                padding: 22px;
+                min-height: 620px;
+            }
+            
+            .name {
+                font-size: 22px;
+            }
+            
+            .title {
+                font-size: 14px;
+            }
+            
+            .company {
+                font-size: 12px;
+            }
+            
+            .profile-image {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+            
+            .sharing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .primary-actions {
+                gap: 12px;
+            }
+            
+            .contact-item {
+                padding: 10px 14px;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Large Phones / Small Tablets */
+        @media (min-width: 481px) and (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .business-card {
+                max-width: 400px;
+                padding: 28px;
+                min-height: 660px;
+            }
+            
+            .name {
+                font-size: 26px;
+            }
+            
+            .title {
+                font-size: 16px;
+            }
+            
+            .company {
+                font-size: 14px;
+            }
+        }
+
+        /* Tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .business-card {
+                max-width: 420px;
+                padding: 32px;
+                min-height: 700px;
+            }
+            
+            .name {
+                font-size: 28px;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 8px;
+                align-items: flex-start;
+            }
+            
+            .business-card {
+                min-height: auto;
+                max-height: 90vh;
+                overflow-y: auto;
+                margin: 10px 0;
+            }
+            
+            .card-header {
+                margin-bottom: 20px;
+            }
+            
+            .profile-image {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            
+            .primary-actions {
+                margin-bottom: 20px;
+            }
+            
+            .contact-section, .sharing-section {
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Desktop and Large Screens */
+        @media (min-width: 1025px) {
+            body {
+                padding: 30px;
+            }
+            
+            .business-card {
+                max-width: 420px;
+                padding: 35px;
+                min-height: 720px;
+            }
+            
+            .business-card:hover {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Ultra-wide screens */
+        @media (min-width: 1920px) {
+            .business-card {
+                max-width: 480px;
+                padding: 40px;
+            }
+        }
+
+        /* Mobile optimization - ensure it fits on all screens */
+        @media (max-height: 800px) {
+            .card-container {
+                align-items: flex-start;
+                padding-top: 15px;
+                min-height: auto;
+            }
+            
+            .business-card {
+                min-height: auto;
+                max-height: 92vh;
+                overflow-y: auto;
+                padding: 15px;
+            }
+            
+            .profile-image {
+                width: 55px;
+                height: 55px;
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+            
+            .name {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .business-card {
+                padding: 12px;
+                min-height: auto;
+            }
+            
+            .profile-image {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .name {
+                font-size: 18px;
+            }
+            
+            .title {
+                font-size: 12px;
+            }
+            
+            .company {
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+            
+            .card-header {
+                margin-bottom: 12px;
+            }
+            
+            .primary-actions {
+                margin-bottom: 12px;
+                gap: 8px;
+            }
+            
+            .contact-section, .sharing-section {
+                margin-bottom: 10px;
+            }
+            
+            .contact-item {
+                padding: 6px 10px;
+                margin-bottom: 6px;
+            }
+            
+            .primary-btn, .secondary-btn {
+                padding: 12px 14px;
+                font-size: 12px;
+                min-height: 42px;
+            }
+            
+            .sharing-grid {
+                gap: 6px;
+                margin-bottom: 10px;
+            }
+            
+            .share-option {
+                padding: 8px 4px;
+                min-height: 45px;
+            }
+            
+            .social-link {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+                padding: 5px;
+            }
+            
+            .card-container {
+                align-items: flex-start;
+                padding-top: 10px;
+                min-height: auto;
+            }
+            
+            .business-card {
+                min-height: auto;
+                max-height: 90vh;
+                overflow-y: auto;
+                padding: 15px;
+                margin: 5px 0;
+            }
+            
+            .profile-image {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .name {
+                font-size: 18px;
+            }
+            
+            .title {
+                font-size: 12px;
+            }
+            
+            .company {
+                font-size: 11px;
+            }
+            
+            .card-header {
+                margin-bottom: 12px;
+            }
+            
+            .primary-actions {
+                margin-bottom: 12px;
+            }
+            
+            .contact-section, .sharing-section {
+                margin-bottom: 10px;
+            }
+            
+            .contact-item {
+                padding: 6px 10px;
+                margin-bottom: 6px;
+            }
+            
+            .sharing-grid {
+                gap: 6px;
+            }
+            
+            .share-option {
+                padding: 8px 4px;
+                min-height: 50px;
+            }
+            
+            .primary-btn, .secondary-btn {
+                padding: 10px 14px;
+                font-size: 12px;
+                min-height: 40px;
+            }
+        }
+
+        /* Ensure card never exceeds viewport and add fallbacks */
+        .business-card {
+            max-height: 95vh;
+            max-width: 95vw;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+        
+        .business-card::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        /* Final mobile fallback for very small screens */
+        @media (max-width: 350px) {
+            .business-card {
+                min-width: 250px;
+                padding: 12px;
+            }
+            
+            .name {
+                font-size: 18px;
+            }
+            
+            .sharing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Specific fix for your screen size */
+        @media (max-height: 900px) and (min-height: 700px) {
+            .business-card {
+                max-height: 88vh;
+                padding: 16px;
+            }
+        }
+
+        /* Very tall screens - prevent too much spacing */
+        @media (min-height: 1000px) {
+            .card-container {
+                padding: 20px 0;
+            }
+            
+            .business-card {
+                max-height: 80vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="business-card">
+            <div class="nfc-indicator">
+                <div class="nfc-pulse"></div>
+                <span>NFC Ready</span>
+            </div>
+            
+            <div class="card-header">
+                <div class="profile-image">FO</div>
+                <div class="name">Frederick Opoku Afriyie</div>
+                <div class="title">Full-Stack Developer • Digital Innovator • Entrepreneur</div>
+                <div class="company">Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin97</div>
+            </div>
+
+            <div class="primary-actions">
+                <button class="primary-btn" onclick="saveToContacts()">
+                    <span>💾</span>
+                    <span>Save Contact</span>
+                </button>
+                <button class="secondary-btn" onclick="shareCard()">
+                    <span>📤</span>
+                    <span>Share Card</span>
+                </button>
+            </div>
+
+            <div class="contact-section">
+                <div class="section-title">Contact Information</div>
+                
+                <div class="contact-item" onclick="actionContact('email', 'opokufred32@gmail.com')">
+                    <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    <span class="contact-text">opokufred32@gmail.com</span>
+                    <span class="copy-indicator">Copy</span>
+                </div>
+
+                <div class="contact-item" onclick="actionContact('phone', '+447555824861')">
+                    <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    <span class="contact-text">+44 7555 824861</span>
+                    <span class="copy-indicator">Call</span>
+                </div>
+
+                <div class="contact-item" onclick="actionContact('website', 'github.com/frederickopoku')">
+                    <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="contact-text">github.com/frederickopoku</span>
+                    <span class="copy-indicator">Visit</span>
+                </div>
+
+                <div class="contact-item">
+                    <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="contact-text">London, UK</span>
+                </div>
+            </div>
+
+            <div class="sharing-section">
+                <div class="section-title">Quick Share</div>
+                <div class="sharing-grid">
+                    <div class="share-option" onclick="shareViaNFC()">
+                        <div class="share-icon">📡</div>
+                        <div class="share-label">NFC Tap</div>
+                    </div>
+                    <div class="share-option" onclick="shareViaAirDrop()">
+                        <div class="share-icon">✈️</div>
+                        <div class="share-label">AirDrop</div>
+                    </div>
+                    <div class="share-option" onclick="showQRCode()">
+                        <div class="share-icon">📱</div>
+                        <div class="share-label">QR Code</div>
+                    </div>
+                    <div class="share-option" onclick="shareViaLink()">
+                        <div class="share-icon">🔗</div>
+                        <div class="share-label">Copy Link</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <div class="section-title">Connect Online</div>
+                <div class="social-links">
+                    <div class="social-link" onclick="openSocial('linkedin')">
+                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </div>
+                    <div class="social-link" onclick="openSocial('github')">
+                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <div class="social-link" onclick="openSocial('twitter')">
+                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Overlay -->
+    <div class="qr-overlay" id="qrOverlay">
+        <div class="qr-modal">
+            <button class="close-qr" onclick="hideQRCode()">×</button>
+            <div class="qr-code" onclick="copyCurrentURL()">
+                <div style="text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 10px;">📱</div>
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        Scan with phone camera<br>
+                        or tap to copy link
+                    </div>
+                </div>
+            </div>
+            <div style="color: #ccc; font-size: 14px;">
+                Point your camera at this code to open the business card
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Business Card Data
+        const businessCardData = {
+            name: "Frederick Opoku Afriyie",
+            title: "Full-Stack Developer • Digital Innovator • Entrepreneur",
+            company: "Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin97",
+            email: "opokufred32@gmail.com",
+            phone: "+447555824861",
+            website: "github.com/frederickopoku",
+            location: "London, UK",
+            linkedin: "https://www.linkedin.com/in/frederick-opoku-afriyie-ba3137335",
+            github: "https://github.com/frederickopoku",
+            twitter: "https://twitter.com/frederickopoku"
+        };
+
+        // Generate vCard format
+        function generateVCard() {
+            return `BEGIN:VCARD
+VERSION:3.0
+FN:${businessCardData.name}
+ORG:${businessCardData.company}
+TITLE:${businessCardData.title}
+EMAIL:${businessCardData.email}
+TEL:${businessCardData.phone}
+URL:https://${businessCardData.website}
+ADR:;;${businessCardData.location};;;;
+URL;type=LinkedIn:${businessCardData.linkedin}
+URL;type=GitHub:${businessCardData.github}
+URL;type=Twitter:${businessCardData.twitter}
+END:VCARD`;
+        }
+
+        // Enhanced notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = 'rgba(220, 53, 69, 0.95)';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInNotification 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Enhanced save to contacts with better device support
+        async function saveToContacts() {
+            const vCardData = generateVCard();
+            
+            try {
+                // Check if we're on mobile first
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                
+                if (isMobile && navigator.share) {
+                    // Try mobile sharing first
+                    try {
+                        await navigator.share({
+                            title: `Add ${businessCardData.name} to Contacts`,
+                            text: `Contact: ${businessCardData.name}`,
+                            url: window.location.href
+                        });
+                        showNotification('✅ Shared! Use your contacts app to save');
+                        return;
+                    } catch (shareError) {
+                        console.log('Mobile share failed, trying download:', shareError);
+                    }
+                }
+                
+                // Fallback: Direct download
+                downloadVCard(vCardData);
+                
+            } catch (error) {
+                console.log('Save contacts error:', error);
+                // Final fallback: copy vCard data
+                if (await copyToClipboard(vCardData)) {
+                    showNotification('📋 Contact data copied! Paste it into a .vcf file');
+                } else {
+                    showNotification('❌ Unable to save contact. Please try again.', 'error');
+                }
+            }
+        }
+        
+        // Direct vCard download function
+        function downloadVCard(vCardData) {
+            try {
+                const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+                const url = window.URL.createObjectURL(blob);
+                
+                // Create download link
+                const downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = `${businessCardData.name.replace(/\s+/g, '_')}.vcf`;
+                downloadLink.style.display = 'none';
+                
+                // Trigger download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Clean up
+                setTimeout(() => {
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+                
+                showNotification('📥 Contact file downloaded! Open it to add to contacts');
+                
+            } catch (error) {
+                console.log('Download failed:', error);
+                showNotification('❌ Download failed. Try copying the link instead.', 'error');
+            }
+        }
+
+        // Enhanced share card function
+        async function shareCard() {
+            try {
+                if (navigator.share) {
+                    await navigator.share({
+                        title: `${businessCardData.name} - Digital Business Card`,
+                        text: `Connect with ${businessCardData.name}, ${businessCardData.title} at ${businessCardData.company}`,
+                        url: window.location.href
+                    });
+                    showNotification('📤 Business card shared successfully!');
+                } else {
+                    copyToClipboard(window.location.href);
+                    showNotification('🔗 Business card link copied to clipboard!');
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    copyToClipboard(window.location.href);
+                    showNotification('🔗 Link copied! Share it anywhere');
+                }
+            }
+        }
+
+        // Enhanced contact actions
+        function actionContact(type, value) {
+            switch(type) {
+                case 'email':
+                    if (window.navigator && navigator.clipboard) {
+                        copyToClipboard(value);
+                        showNotification('📧 Email copied to clipboard');
+                    } else {
+                        window.location.href = `mailto:${value}`;
+                    }
+                    break;
+                case 'phone':
+                    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                        window.location.href = `tel:${value}`;
+                    } else {
+                        copyToClipboard(value);
+                        showNotification('📞 Phone number copied to clipboard');
+                    }
+                    break;
+                case 'website':
+                    window.open(`https://${value}`, '_blank');
+                    break;
+                default:
+                    copyToClipboard(value);
+                    showNotification('📋 Copied to clipboard');
+            }
+        }
+
+        // Copy to clipboard with enhanced error handling
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch (error) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    return true;
+                } catch (fallbackError) {
+                    document.body.removeChild(textArea);
+                    return false;
+                }
+            }
+        }
+
+        // Enhanced NFC with both reading and writing
+        let nfcReaderActive = false;
+
+        async function shareViaNFC() {
+            if ('NDEFWriter' in window) {
+                try {
+                    const ndefWriter = new NDEFWriter();
+                    const message = {
+                        records: [
+                            { recordType: "text", data: generateVCard() },
+                            { recordType: "url", data: window.location.href }
+                        ]
+                    };
+                    
+                    await ndefWriter.write(message);
+                    showNotification('📡 Ready! Tap phones together to share');
+                    
+                    // Also start listening for incoming NFC
+                    startNFCListener();
+                    
+                } catch (error) {
+                    showNotification('📱 NFC not available - using share instead');
+                    shareCard();
+                }
+            } else {
+                showNotification('📱 NFC not supported - using share instead');
+                shareCard();
+            }
+        }
+
+        // Start listening for incoming NFC taps
+        async function startNFCListener() {
+            if ('NDEFReader' in window && !nfcReaderActive) {
+                try {
+                    const ndefReader = new NDEFReader();
+                    nfcReaderActive = true;
+                    
+                    await ndefReader.scan();
+                    showNotification('🔍 Listening for incoming business cards...');
+                    
+                    ndefReader.addEventListener('reading', ({ message }) => {
+                        for (const record of message.records) {
+                            if (record.recordType === 'text') {
+                                const textDecoder = new TextDecoder(record.encoding);
+                                const data = textDecoder.decode(record.data);
+                                
+                                if (data.includes('BEGIN:VCARD')) {
+                                    handleIncomingBusinessCard(data);
+                                    break;
+                                }
+                            } else if (record.recordType === 'url') {
+                                const url = new TextDecoder().decode(record.data);
+                                if (url.includes('business') || url.includes('card')) {
+                                    handleIncomingCardURL(url);
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.log('NFC Reader not available:', error);
+                    nfcReaderActive = false;
+                }
+            }
+        }
+
+        // Handle incoming business card data
+        function handleIncomingBusinessCard(vCardData) {
+            showNotification('📇 Business card received! Opening...');
+            
+            // Parse the vCard and offer to save
+            setTimeout(() => {
+                if (confirm('Save this contact to your device?')) {
+                    saveIncomingContact(vCardData);
+                }
+            }, 500);
+        }
+
+        // Handle incoming business card URL
+        function handleIncomingCardURL(url) {
+            showNotification('🔗 Business card link received!');
+            
+            setTimeout(() => {
+                if (confirm('Open this business card?')) {
+                    window.open(url, '_blank');
+                }
+            }, 500);
+        }
+
+        // Save incoming contact
+        function saveIncomingContact(vCardData) {
+            try {
+                const blob = new Blob([vCardData], { type: 'text/vcard' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'contact.vcf';
+                link.click();
+                window.URL.revokeObjectURL(url);
+                
+                showNotification('✅ Contact saved successfully!');
+            } catch (error) {
+                showNotification('❌ Error saving contact', 'error');
+            }
+        }
+
+        // Auto-start NFC listener when page loads (if supported)
+        function initializeAutoNFC() {
+            if ('NDEFReader' in window) {
+                // Start passive listening
+                startNFCListener();
+                updateNFCIndicator(true);
+            } else {
+                updateNFCIndicator(false);
+            }
+        }
+
+        // Update NFC indicator status
+        function updateNFCIndicator(isActive) {
+            const indicator = document.querySelector('.nfc-indicator span');
+            const pulse = document.querySelector('.nfc-pulse');
+            
+            if (isActive) {
+                indicator.textContent = 'NFC Active';
+                pulse.style.background = '#4ade80'; // Green
+            } else {
+                indicator.textContent = 'NFC Ready';
+                pulse.style.background = '#667eea'; // Blue
+            }
+        }
+
+        // AirDrop sharing (iOS)
+        function shareViaAirDrop() {
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                shareCard();
+            } else {
+                showNotification('✈️ AirDrop available on iOS - using share instead');
+                shareCard();
+            }
+        }
+
+        // Show QR Code with actual generation
+        function showQRCode() {
+            const qrContainer = document.querySelector('.qr-code');
+            const currentURL = window.location.href;
+            
+            // Clear existing content
+            qrContainer.innerHTML = '';
+            
+            // Generate QR code using QR Server API
+            const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentURL)}`;
+            
+            const qrImage = document.createElement('img');
+            qrImage.src = qrCodeURL;
+            qrImage.alt = 'QR Code for Business Card';
+            qrImage.style.width = '100%';
+            qrImage.style.height = '100%';
+            qrImage.style.borderRadius = '12px';
+            qrImage.style.cursor = 'pointer';
+            
+            qrImage.onclick = () => copyCurrentURL();
+            
+            qrContainer.appendChild(qrImage);
+            document.getElementById('qrOverlay').style.display = 'flex';
+            showNotification('📱 QR Code generated! Others can scan to get your card');
+        }
+
+        // Hide QR Code
+        function hideQRCode() {
+            document.getElementById('qrOverlay').style.display = 'none';
+        }
+
+        // Share via link
+        function shareViaLink() {
+            copyToClipboard(window.location.href);
+            showNotification('🔗 Business card link copied! Share it anywhere');
+        }
+
+        // Copy current URL
+        function copyCurrentURL() {
+            copyToClipboard(window.location.href);
+            showNotification('🔗 Link copied to clipboard!');
+        }
+
+        // Open social media
+        function openSocial(platform) {
+            const urls = {
+                linkedin: businessCardData.linkedin,
+                github: businessCardData.github,
+                twitter: businessCardData.twitter
+            };
+            window.open(urls[platform], '_blank');
+        }
+
+        // PWA capabilities check and initialization
+        function initializePWA() {
+            const isPWASupported = 'serviceWorker' in navigator && 'caches' in window;
+            
+            if (isPWASupported) {
+                if (window.location.protocol === 'https:' && !window.location.href.includes('claude.ai')) {
+                    registerServiceWorker();
+                } else {
+                    console.log('PWA: Service Worker skipped (development/sandbox environment)');
+                    implementFallbackCaching();
+                }
+            } else {
+                console.log('PWA: Not supported in this browser');
+            }
+        }
+
+        function registerServiceWorker() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('PWA: Service Worker registered successfully');
+                })
+                .catch(error => {
+                    console.log('PWA: Service Worker registration failed:', error);
+                    implementFallbackCaching();
+                });
+        }
+
+        function implementFallbackCaching() {
+            try {
+                const cardData = JSON.stringify(businessCardData);
+                sessionStorage.setItem('businessCardData', cardData);
+                console.log('PWA: Fallback caching implemented');
+            } catch (error) {
+                console.log('PWA: Fallback caching not available');
+            }
+        }
+
+        // Analytics tracking
+        function trackEvent(action, method) {
+            console.log(`Analytics: ${action} via ${method}`);
+            // In production, send to analytics service
+        }
+
+        // Initialize PWA features and NFC
+        window.addEventListener('load', () => {
+            initializePWA();
+            initializeAutoNFC();
+        });
+
+        // Install prompt handling
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showNotification('📱 Add this business card to your home screen for quick access!');
+        });
+
+        // Close QR overlay when clicking outside
+        document.getElementById('qrOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideQRCode();
+            }
+        });
+
+        // Keyboard navigation for QR overlay
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideQRCode();
+            }
+        });
+    </script>
+</body>
+</html>
