@@ -9,10 +9,14 @@
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Business Card">
+    <meta name="apple-mobile-web-app-title" content="Frederick's Card">
+    <meta name="mobile-web-app-capable" content="yes">
     
-    <!-- Manifest -->
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRGlnaXRhbCBCdXNpbmVzcyBDYXJkIiwic2hvcnRfbmFtZSI6IkJpekNhcmQiLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBjMGMwYyIsInRoZW1lX2NvbG9yIjoiIzY2N2VlYSIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBek1qQWdNekl3SWo0S0lDQWdJRHh5WldOMElIZzlJakV3SWlCNVBTSXhNQ0lnZDJsa2RHZzlJak13TUNJZ2FHVnBaMmgwUFNJek1EQWlJR1pwYkd3OUlpTTJOamRsWldFaUlISjRQU0l4TlNJdlBnb2dJQ0FnUEhSbGVIUWdlRDBpTVRZd0lpQjVQU0l4TnpBaUlHWnBiR3c5SW1GaVl6QXhNanBuSWlCbVlXMXBiSGs5SW1Gc2FXZHVJRzV2Y20xaGJDSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0krQmk5cExDQWdQQzl6ZG1jKyIsInNpemVzIjoiMzIweDMyMCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzY2N2VlYTtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzY0YmEyO3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjx0ZXh0IHg9IjkwIiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2MCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GTzwvdGV4dD4KPC9zdmc+">
+    
+    <!-- Enhanced Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRnJlZGVyaWNrIE9wb2t1IEFmcml5aWUgLSBCdXNpbmVzcyBDYXJkIiwic2hvcnRfbmFtZSI6IkZyZWRlcmljaydzIENhcmQiLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBjMGMwYyIsInRoZW1lX2NvbG9yIjoiIzY2N2VlYSIsImNhdGVnb3JpZXMiOlsiYnVzaW5lc3MiLCJwcm9kdWN0aXZpdHkiXSwiZGVzY3JpcHRpb24iOiJEaWdpdGFsIGJ1c2luZXNzIGNhcmQgZm9yIEZyZWRlcmljayBPcG9rdSBBZnJpeWllIC0gRnVsbC1TdGFjayBEZXZlbG9wZXIsIERpZ2l0YWwgSW5ub3ZhdG9yLCBFbnRyZXByZW5ldXIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRnd0lpQm9aV2xuYUhROUlqRTRNQ0lnZG1sbGQwSnZlRDBpTUNBd0lERTRNQ0F4T0RBaUlHWnBiR3c5SW01dmJtVWlJSGh0Ykc1elBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5SStDanh5WldOMElIZHBaSFJvUFNJeE9EQWlJR2hsYVdkb2REMGlNVGd3SWlCeWVEMGlOREFpSUdacGJHdzlJblZ5YkNnalozSmhaR2xsYm5RcElpOCtDaXhrWldaelBnbzhiR2x1WldGeVIzSmhaR2xsYm5RZ2FXUTlJbWR5WVdScFpXNTBJaUI0TVQwaU1DVWlJSGt4UFNJd0pTSWdlREk5SWpFd01DVWlJSGt5UFNJeE1EQWxJajRLUEhOMGIzQWdiMlptYzJWMFBTSXdKU0lnYzNSNWJHVTlJbk4wYjNBdFkyOXNiM0k2SXpZMk4yVmxZVHR6ZEc5d0xXOXdZV05wZEhrNk1TSWdMejRLUEhOMGIzQWdiMlptYzJWMFBTSXhNREFsSWlCemRIbHNaVDBpYzNSdmNDMWpiMnh2Y2pvalEyUT9PREZzWEdiUWQzc0dORjJPRzJSSmNTSmNKU0lnTHo0S1BDOXNhVzVsWVhKSGNtRmthV1Z1ZEQ0S1BDOWtaV1p6UGdvOGRHVjRkQ0I0UFNJNU1DSWdlVDBpTVRFd0lpQm1iMjUwTFdaaGJXbHNlVDBpUVhKcFlXd3NJSE5oYm5NdGMyVnlhV1lpSUdadmJuUXRjMmw2WlQwaU5qQWlJR1p2Ym5RdGQyVnBaMmgwUFNKaWIyeGtJaUJtYVd4c1BTSjNhR2wwWlNJZ2RHVjRkQzFoYm1Ob2IzSTlJbTFwWkdSc1pTSStSazg4TDNSbGVIUStDand2YzNablBnPT0iLCJzaXplcyI6IjE4MHgxODAiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV0sIm9yaWVudGF0aW9uIjoicG9ydHJhaXQtcHJpbWFyeSIsInNjb3BlIjoiLyIsImxhbmciOiJlbiJ9">
     
     <style>
         * {
@@ -79,6 +83,102 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
+        .install-prompt {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(102, 126, 234, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px;
+            z-index: 1002;
+            animation: slideDown 0.4s ease-out;
+            max-width: 320px;
+            width: 90vw;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .install-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            position: relative;
+        }
+
+        .install-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .install-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .install-text strong {
+            font-size: 14px;
+        }
+
+        .install-text small {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .install-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .install-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .install-close {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .install-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Add install button to the card */
         .nfc-indicator {
             position: absolute;
             top: 15px;
@@ -89,6 +189,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nfc-indicator:hover {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .nfc-pulse {
@@ -911,9 +1018,9 @@
 <body>
     <div class="card-container">
         <div class="business-card">
-            <div class="nfc-indicator">
+            <div class="nfc-indicator" onclick="triggerInstall()" title="Click to install as app">
                 <div class="nfc-pulse"></div>
-                <span>NFC Ready</span>
+                <span>Tap to Install</span>
             </div>
             
             <div class="card-header">
@@ -954,11 +1061,11 @@
                     <span class="copy-indicator">Call</span>
                 </div>
 
-                <div class="contact-item" onclick="actionContact('website', 'github.com/fredopoku')">
+                <div class="contact-item" onclick="actionContact('website', 'github.com/frederickopoku')">
                     <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"/>
                     </svg>
-                    <span class="contact-text">github.com/fredopoku</span>
+                    <span class="contact-text">github.com/frederickopoku</span>
                     <span class="copy-indicator">Visit</span>
                 </div>
 
@@ -985,9 +1092,9 @@
                         <div class="share-icon">📱</div>
                         <div class="share-label">QR Code</div>
                     </div>
-                    <div class="share-option" onclick="shareViaLink()">
-                        <div class="share-icon">🔗</div>
-                        <div class="share-label">Copy Link</div>
+                    <div class="share-option" onclick="triggerInstall()">
+                        <div class="share-icon">⬇️</div>
+                        <div class="share-label">Install App</div>
                     </div>
                 </div>
             </div>
@@ -1042,10 +1149,10 @@
             company: "Freelancer | IT Support Assistant at Stawell | Partner & Co-Founder Visoin97",
             email: "opokufred32@gmail.com",
             phone: "+447555824861",
-            website: "github.com/fredopoku",
+            website: "github.com/frederickopoku",
             location: "London, UK",
             linkedin: "https://www.linkedin.com/in/frederick-opoku-afriyie-ba3137335",
-            github: "https://github.com/fredopoku",
+            github: "https://github.com/frederickopoku",
             twitter: "https://twitter.com/frederickopoku"
         };
 
@@ -1306,23 +1413,38 @@ END:VCARD`;
             const indicator = document.querySelector('.nfc-indicator span');
             const pulse = document.querySelector('.nfc-pulse');
             
+            // Check if app is installed first
+            if (isInstalled) {
+                indicator.textContent = 'App Installed';
+                pulse.style.background = '#10b981'; // Emerald green
+                return;
+            }
+            
+            // Check if install is available
+            if (deferredPrompt) {
+                indicator.textContent = 'Tap to Install';
+                pulse.style.background = '#8b5cf6'; // Purple
+                return;
+            }
+            
+            // Check NFC support
             if ('NDEFWriter' in window) {
                 // Check if we're on HTTPS or localhost
                 if (location.protocol === 'https:' || location.hostname.includes('localhost')) {
                     indicator.textContent = 'NFC Ready';
                     pulse.style.background = '#4ade80'; // Green
                 } else {
-                    indicator.textContent = 'NFC Needs HTTPS';
+                    indicator.textContent = 'Needs HTTPS';
                     pulse.style.background = '#fbbf24'; // Yellow
                 }
             } else {
                 // Check device type for appropriate message
                 if (navigator.userAgent.includes('iPhone')) {
-                    indicator.textContent = 'AirDrop Ready';
+                    indicator.textContent = 'Tap to Install';
                     pulse.style.background = '#3b82f6'; // Blue
                 } else {
-                    indicator.textContent = 'NFC Not Supported';
-                    pulse.style.background = '#ef4444'; // Red
+                    indicator.textContent = 'Tap to Install';
+                    pulse.style.background = '#6366f1'; // Indigo
                 }
             }
         }
@@ -1538,19 +1660,161 @@ END:VCARD`;
         // Initialize PWA features and NFC
         window.addEventListener('load', () => {
             initializePWA();
+            checkIfInstalled();
             checkNFCSupport();
             if ('NDEFWriter' in window && location.protocol === 'https:') {
                 initializeAutoNFC();
             }
         });
 
-        // Install prompt handling
+        // Install prompt handling and PWA features
         let deferredPrompt;
+        let isInstalled = false;
+
+        // Check if app is already installed
+        function checkIfInstalled() {
+            // Check if running in standalone mode
+            if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+                isInstalled = true;
+                showNotification('📱 Business card is running as an installed app!');
+            }
+            
+            // Check if launched from home screen
+            if (window.navigator.standalone === true) {
+                isInstalled = true;
+            }
+            
+            // Update visual elements if installed
+            if (isInstalled) {
+                setTimeout(() => {
+                    checkNFCSupport();
+                    updateInstallButton();
+                }, 100);
+            }
+        }
+
+        // Handle install prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            showNotification('📱 Add this business card to your home screen for quick access!');
+            
+            // Update indicator to show install is available
+            checkNFCSupport();
+            updateInstallButton();
+            
+            if (!isInstalled) {
+                // Show install prompt after a short delay
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 2000);
+            }
         });
+
+        // Show install prompt
+        function showInstallPrompt() {
+            const installNotification = document.createElement('div');
+            installNotification.className = 'install-prompt';
+            installNotification.innerHTML = `
+                <div class="install-content">
+                    <div class="install-icon">📱</div>
+                    <div class="install-text">
+                        <strong>Add to Home Screen</strong><br>
+                        <small>Install this business card as an app</small>
+                    </div>
+                    <button class="install-btn" onclick="installApp()">Install</button>
+                    <button class="install-close" onclick="dismissInstall()">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(installNotification);
+            
+            // Auto-dismiss after 10 seconds
+            setTimeout(() => {
+                if (document.body.contains(installNotification)) {
+                    dismissInstall();
+                }
+            }, 10000);
+        }
+
+        // Install the app
+        async function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    showNotification('🎉 Business card installed! Find it on your home screen');
+                    isInstalled = true;
+                    checkNFCSupport();
+                    updateInstallButton();
+                } else {
+                    showNotification('📱 Install cancelled. You can still bookmark this page!');
+                }
+                
+                deferredPrompt = null;
+                dismissInstall();
+            }
+        }
+
+        // Dismiss install prompt
+        function dismissInstall() {
+            const prompt = document.querySelector('.install-prompt');
+            if (prompt) {
+                prompt.remove();
+            }
+        }
+
+        // Handle app installation
+        window.addEventListener('appinstalled', () => {
+            showNotification('✅ Business card app installed successfully!');
+            isInstalled = true;
+            dismissInstall();
+        });
+
+        // Add manual install button functionality
+        function triggerInstall() {
+            if (deferredPrompt) {
+                installApp();
+            } else if (!isInstalled) {
+                // Fallback instructions
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isAndroid = /Android/.test(navigator.userAgent);
+                
+                if (isIOS) {
+                    showNotification('📱 Safari: Tap Share → "Add to Home Screen"');
+                } else if (isAndroid) {
+                    showNotification('📱 Chrome: Tap Menu (⋮) → "Add to Home screen"');
+                } else {
+                    showNotification('📱 Bookmark this page for quick access');
+                }
+            } else {
+                showNotification('✅ App is already installed on your device!');
+            }
+            
+            // Update install button appearance
+            updateInstallButton();
+        }
+
+        // Update install button visual state
+        function updateInstallButton() {
+            const installBtn = document.querySelector('.share-option:nth-child(4)');
+            const installIcon = installBtn.querySelector('.share-icon');
+            const installLabel = installBtn.querySelector('.share-label');
+            
+            if (isInstalled) {
+                installBtn.className = 'share-option installed';
+                installIcon.textContent = '✅';
+                installLabel.textContent = 'Installed';
+            } else if (deferredPrompt) {
+                installBtn.className = 'share-option install-available';
+                installIcon.textContent = '⬇️';
+                installLabel.textContent = 'Install App';
+            } else {
+                installBtn.className = 'share-option';
+                installIcon.textContent = '📱';
+                installLabel.textContent = 'Add to Home';
+            }
+        }
 
         // Close QR overlay when clicking outside
         document.getElementById('qrOverlay').addEventListener('click', function(e) {
